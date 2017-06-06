@@ -107,7 +107,7 @@ namespace Tonjiru
 
         private static bool EnumChildWindowProc(IntPtr windowHandle, IntPtr lParam)
         {
-            StringBuilder builder = new StringBuilder(256);
+            var builder = new StringBuilder(256);
             GetClassName(windowHandle, builder, builder.Capacity);
 
             // ストアアプリのためのハック -> "Windows.UI.Core.CoreWindow" を探す
