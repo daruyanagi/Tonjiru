@@ -26,6 +26,11 @@ namespace Tonjiru.ViewModel
                             window.Close();
                         }
                     }
+
+                    if (Properties.Settings.Default.Notification)
+                    {
+                        NotificationHelper.ShowBalloonTip();
+                    }
                 }
                 catch (Exception exception)
                 {
@@ -44,7 +49,6 @@ namespace Tonjiru.ViewModel
                 var process_name = _.Parent.ProcessName.ToLower();
                 if (Exclusions.IndexOf(process_name) < 0)
                 Exclusions.Add(process_name);
-                // OnPropertyChanged("Exclusions");
 
                 // ［閉じる］チェックを外しておく親切設計
                 foreach (var window in Windows)

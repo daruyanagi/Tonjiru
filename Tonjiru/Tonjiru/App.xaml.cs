@@ -40,6 +40,11 @@ namespace Tonjiru
             
                         window.Close();
                     }
+                    
+                    if (Tonjiru.Properties.Settings.Default.Notification)
+                    {
+                        NotificationHelper.ShowBalloonTip();
+                    }
                 }
                 catch (Exception exception)
                 {
