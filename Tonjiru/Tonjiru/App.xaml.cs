@@ -8,55 +8,62 @@ using System.Windows;
 
 namespace Tonjiru
 {
+    using System.Runtime.InteropServices;
     using System.Windows.Forms; // 初期設定では参照されていないので追加しておく
 
     // 修飾しないと System.Windows.Forms.Application に解釈されてコンパイルできない
-    public partial class App : System.Windows.Application 
+    public partial class App : System.Windows.Application
     {
-        public App() : base()
+        [System.STAThreadAttribute()]
+        public static void Main()
         {
-            Startup += App_Startup;
+            var args = Environment.GetCommandLineArgs();
+
+            if (args.Contains("/g") || (Control.ModifierKeys & Keys.Shift) == Keys.Shift)
+            {
+                var app = new Tonjiru.App();
+                app.InitializeComponent();
+                app.Run();
+            }
+            else // UI less mode
+            {
+                CloseAllWindowsAndExit();
+            }
         }
 
-        private void App_Startup(object sender, StartupEventArgs e)
+        private static void CloseAllWindowsAndExit()
         {
-            if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift)
+            try
             {
-                MainWindow = new Views.MainWindow();
-                MainWindow.Show();
-            }
-            else
-            {
-                try
+                var exclusions = System.IO.File.ReadAllLines("exclusions.txt");
+
+                foreach (var window in DesktopHelper.GetVisibleWindows())
                 {
-                    var exclusions = System.IO.File.ReadAllLines("exclusions.txt");
-            
-                    foreach (var window in DesktopHelper.GetVisibleWindows())
+                    if (exclusions.Any(_ => _ == window.Parent.ProcessName.ToLower()))
                     {
-                        if (exclusions.Any(_ => _ == window.Parent.ProcessName.ToLower()))
-                        {
-                            continue;
-                        }
-            
-                        window.Close();
+                        continue;
                     }
-                    
-                    if (Tonjiru.Properties.Settings.Default.Notification)
-                    {
-                        NotificationHelper.ShowBalloonTip();
-                    }
+
+                    window.Close();
                 }
-                catch (Exception exception)
+
+                if (Tonjiru.Properties.Settings.Default.Notification)
                 {
-                    Console.WriteLine($"Error: {exception.Message}");
-                    Console.WriteLine($"Press Any Key To Exit");
-                    Console.Read();
-                }
-                finally
-                {
-                    Shutdown();
+                    NotificationHelper.ShowBalloonTip();
                 }
             }
+            catch (Exception exception)
+            {
+                if (Tonjiru.Properties.Settings.Default.Notification)
+                {
+                    NotificationHelper.ShowBalloonTip(exception.Message);
+                }
+            }
+        }
+
+        public App() : base()
+        {
+
         }
     }
 }
