@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -100,6 +103,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\refresh.png" />
+    <Resource Include="Images\close.png" />
+    <Resource Include="app.ico" />
     <Content Include="exclusions.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
