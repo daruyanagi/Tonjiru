@@ -56,6 +56,8 @@ namespace Tonjiru
             return GetTopLevelWindows()
                 // 表示されて（いて、タイトルをもって）いるウインドウのみを列挙
                 .Where(_ => _.IsVisible && !string.IsNullOrEmpty(_.Title))
+                // 自分は除外しておく
+                .Where(_ => _.Parent?.ProcessName.ToLower() != "tonjiru")
                 // Microsoft Edge の CP（コンテンツプロセス）は除外しておく
                 .Where(_ => _.Parent?.ProcessName != "MicrosoftEdgeCP")
                 // Program Manager は除外しておく

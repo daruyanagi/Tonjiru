@@ -52,15 +52,8 @@ namespace Tonjiru.ViewModel
 
             RemoveExclusionsCommand = new RelayCommand<string>(_ =>
             {
-                if (_ == "tonjiru")
-                {
-                    System.Windows.MessageBox.Show(App.Current.MainWindow, "Can not remove 'tonjiru'.", AppNameAndVersion, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
-                }
-                else
-                {
-                    Exclusions.Remove(_);
-                    OnPropertyChanged("Exclusions");
-                }
+                Exclusions.Remove(_);
+                OnPropertyChanged("Exclusions");
             });
 
             RefreshVisibleWindows();
