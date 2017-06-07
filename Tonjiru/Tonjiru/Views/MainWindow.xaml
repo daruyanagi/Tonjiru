@@ -4,8 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tonjiru.Views"
+        xmlns:p="clr-namespace:Tonjiru.Properties"
         mc:Ignorable="d"
         Title="{Binding AppNameAndVersion}" Height="300" Width="400">
+
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="6" />
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Margin" Value="6" />
+        </Style>
+    </Window.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -24,13 +36,11 @@
                     <StackPanel Orientation="Horizontal">
                         <Image Width="16" Height="16" Margin="4" Source="/Images/close.png"
                                RenderOptions.BitmapScalingMode="Fant" />
-                        <TextBlock Margin="6">Close All Windows And Exit</TextBlock>
+                        <TextBlock>Close All Windows And Exit</TextBlock>
                     </StackPanel>
                 </Button>
             </ToolBar>
         </ToolBarTray>
-
-
 
         <TabControl Grid.Row="1">
             <TabItem Header="Windows">
@@ -77,6 +87,16 @@
                     <TextBlock Grid.Row="1" Margin="6">* if process name matchs exclusions, window is not closed.</TextBlock>
                 </Grid>
                 
+            </TabItem>
+
+            <TabItem Header="Settings">
+                <StackPanel>
+                    <TextBlock>MessageType</TextBlock>
+                    <ComboBox SelectedIndex="{Binding Source={x:Static p:Settings.Default}, Path=MessageType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBoxItem>SendMessage</ComboBoxItem>
+                        <ComboBoxItem>PostMessage</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
             </TabItem>
         </TabControl>
     </Grid>

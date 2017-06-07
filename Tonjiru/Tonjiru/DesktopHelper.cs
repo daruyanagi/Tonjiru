@@ -138,6 +138,9 @@ namespace Tonjiru
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern int SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern int PostMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
+
         public IntPtr Handle { get; set; }
         public bool IsVisible { get; set; }
         public string Title { get; set; }
@@ -147,8 +150,18 @@ namespace Tonjiru
         {
             // とりあえず WM_CLOSE と SC_CLOSE の両方送っておく
             // ToDo：オプションで選べるようにしてもいいかも
-            SendMessage(Handle, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
-            SendMessage(Handle, WM_SYSCOMMAND, (IntPtr)SC_CLOSE, IntPtr.Zero);
+
+            switch (Properties.Settings.Default.MessageType)
+            {
+                case 0:
+                    SendMessage(Handle, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
+                    SendMessage(Handle, WM_SYSCOMMAND, (IntPtr)SC_CLOSE, IntPtr.Zero);
+                    break;
+                default:
+                    PostMessage(Handle, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
+                    PostMessage(Handle, WM_SYSCOMMAND, (IntPtr)SC_CLOSE, IntPtr.Zero);
+                    break;
+            }
         }
     }
 }
