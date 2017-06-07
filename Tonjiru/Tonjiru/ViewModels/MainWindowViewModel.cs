@@ -44,10 +44,14 @@ namespace Tonjiru.ViewModel
                 var process_name = _.Parent.ProcessName.ToLower();
                 if (Exclusions.IndexOf(process_name) < 0)
                 Exclusions.Add(process_name);
-                OnPropertyChanged("Exclusions");
+                // OnPropertyChanged("Exclusions");
 
-                // _.IsTargeted = false;
-                // OnPropertyChanged("Windows");
+                // ［閉じる］チェックを外しておく親切設計
+                foreach (var window in Windows)
+                {
+                    if (window.Parent.ProcessName.ToLower() == process_name)
+                        window.IsTargeted = false;
+                }
             });
 
             RemoveExclusionsCommand = new RelayCommand<string>(_ =>
@@ -101,10 +105,21 @@ namespace Tonjiru.ViewModel
         }
     }
 
-    public class WindowInfo
+    public class WindowInfo : BindableBase
     {
-        public TopLevelWindow TopLevelWindow { get; set; }
-        public bool IsTargeted { get; set; }
+        private TopLevelWindow topLevelWindow = null;
+        public TopLevelWindow TopLevelWindow
+        {
+            get { return topLevelWindow; }
+            set { SetProperty(ref topLevelWindow, value); }
+        }
+
+        private bool isTargeted = true;
+        public bool IsTargeted
+        {
+            get { return isTargeted; }
+            set { SetProperty(ref isTargeted, value); }
+        }
 
         public IntPtr Handle { get { return TopLevelWindow.Handle; } }
         public string Title { get { return TopLevelWindow.Title; } }
