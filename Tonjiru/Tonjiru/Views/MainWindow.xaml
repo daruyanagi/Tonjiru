@@ -14,9 +14,19 @@
 
         <ToolBarTray Grid.Row="0">
             <ToolBar>
-                <Button Content="Close All Windows And Exit" Command="{Binding CloseAllWindowsAndExitCommand}" />
+                <Button ToolTip="Refresh Windows" Command="{Binding RefreshCommand}">
+                    <Image Width="16" Height="16" Margin="4" Source="/Images/refresh.png"
+                            RenderOptions.BitmapScalingMode="Fant" />
+                </Button>
                 <Separator />
-                <Button Content="Refresh" Command="{Binding RefreshCommand}" />
+                <Button  
+                    ToolTip="Close All Windows And Exit" Command="{Binding CloseAllWindowsAndExitCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Margin="4" Source="/Images/close.png"
+                               RenderOptions.BitmapScalingMode="Fant" />
+                        <TextBlock Margin="6">Close All Windows And Exit</TextBlock>
+                    </StackPanel>
+                </Button>
             </ToolBar>
         </ToolBarTray>
 
