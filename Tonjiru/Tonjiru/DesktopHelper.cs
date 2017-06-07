@@ -53,16 +53,19 @@ namespace Tonjiru
             // 本当は EnumWindows() でフィルタリングした方が高速だと思うが、
             // 処理の簡便のため Linq で済ます
 
-            return GetTopLevelWindows()
-                // 表示されて（いて、タイトルをもって）いるウインドウのみを列挙
-                .Where(_ => _.IsVisible && !string.IsNullOrEmpty(_.Title))
-                // 自分は除外しておく
-                .Where(_ => _.Parent?.ProcessName.ToLower() != "tonjiru")
-                // Microsoft Edge の CP（コンテンツプロセス）は除外しておく
-                .Where(_ => _.Parent?.ProcessName != "MicrosoftEdgeCP")
-                // Program Manager は除外しておく
-                .Where(_ => _.Title != "Program Manager" && _.Parent?.ProcessName.ToLower() != "explorer")
-                .ToList();
+            // 表示されて（いて、タイトルをもって）いるウインドウのみを列挙
+            var temp = GetTopLevelWindows().Where(_ => _.IsVisible && !string.IsNullOrEmpty(_.Title));
+
+            // 自分は除外しておく
+            temp = temp.Where(_ => _.Parent.ProcessName.ToLower() != "tonjiru");
+
+            // Microsoft Edge の CP（コンテンツプロセス）は除外しておく
+            temp = temp.Where(_ => _.Parent.ProcessName != "MicrosoftEdgeCP");
+
+            // Program Manager (explorer) は除外しておく
+            temp = temp.Where(_ => _.Title != "Program Manager" || _.Parent.ProcessName.ToLower() != "explorer");
+                
+            return temp.ToList();
         }
 
         public static List<TopLevelWindow> GetTopLevelWindows()
