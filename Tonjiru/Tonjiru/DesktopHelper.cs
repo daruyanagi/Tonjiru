@@ -56,6 +56,9 @@ namespace Tonjiru
             // 表示されて（いて、タイトルをもって）いるウインドウのみを列挙
             var temp = GetTopLevelWindows().Where(_ => _.IsVisible && !string.IsNullOrEmpty(_.Title));
 
+            // Parent == null は除外しておく
+            temp = temp.Where(_ => _.Parent != null);
+
             // 自分は除外しておく
             temp = temp.Where(_ => _.Parent.ProcessName.ToLower() != "tonjiru");
 
