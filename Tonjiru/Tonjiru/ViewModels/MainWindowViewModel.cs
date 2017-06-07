@@ -79,7 +79,21 @@ namespace Tonjiru.ViewModel
 
         public void RefreshVisibleWindows()
         {
-            Exclusions = new ObservableCollection<string>(System.IO.File.ReadAllLines("exclusions.txt"));
+            try
+            {
+                var exclusions = System.IO.File.ReadAllLines("exclusions.txt");
+
+                Exclusions = new ObservableCollection<string>(exclusions);
+            }
+            catch (Exception exception)
+            {
+                if (Tonjiru.Properties.Settings.Default.Notification)
+                {
+                    NotificationHelper.ShowBalloonTip(exception.Message);
+                }
+
+                App.Current.Shutdown(-1);
+            }
 
             var temp = DesktopHelper
                 .GetVisibleWindows()
