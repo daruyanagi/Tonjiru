@@ -23,7 +23,14 @@ namespace Tonjiru.Views
         {
             InitializeComponent();
 
+            Closed += MainWindow_Closed;
+
             DataContext = new ViewModel.MainWindowViewModel();
+        }
+
+        private void MainWindow_Closed(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Save();
         }
     }
 }
