@@ -118,39 +118,39 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonCloseAllWindowsAndExit" xml:space="preserve">
-    <value>Close All Windows and Exit</value>
+    <value>すべてのウィンドウを閉じて終了</value>
   </data>
   <data name="ButtonCopyWindows" xml:space="preserve">
-    <value>Copy Windows' Information to Clipboard</value>
+    <value>ウィンドウ情報をクリップボードへコピー</value>
   </data>
   <data name="ButtonRefreshWindows" xml:space="preserve">
-    <value>Refresh Windows</value>
+    <value>ウィンドウ情報を再取得</value>
   </data>
   <data name="ButtonSaveWindows" xml:space="preserve">
-    <value>Save Windows' Information as File</value>
+    <value>ウィンドウ情報をファイルへ保存</value>
   </data>
   <data name="CheckboxNotification" xml:space="preserve">
-    <value>Notify after sending "close" signals</value>
+    <value>イベント（終了メッセージの送信完了など）発生時に通知する</value>
   </data>
   <data name="LabelLanguage" xml:space="preserve">
-    <value>Language</value>
+    <value>言語</value>
   </data>
   <data name="LabelMessageType" xml:space="preserve">
-    <value>Message Type</value>
+    <value>メッセージの種類</value>
   </data>
   <data name="LabelNotification" xml:space="preserve">
-    <value>Notification</value>
+    <value>通知</value>
   </data>
   <data name="LabelProcessExclusionsCaution" xml:space="preserve">
-    <value>The window belonging to the above processes is not closed at UI-less mode</value>
+    <value>上記のプロセスに属するウィンドウには終了メッセージが送られません（UI レスモードの場合）</value>
   </data>
   <data name="TabProcessExclusions" xml:space="preserve">
-    <value>Process Exclusions</value>
+    <value>除外するプロセス</value>
   </data>
   <data name="TabSettings" xml:space="preserve">
-    <value>Settings</value>
+    <value>設定</value>
   </data>
   <data name="TabWindows" xml:space="preserve">
-    <value>Windows</value>
+    <value>ウィンドウ</value>
   </data>
 </root>

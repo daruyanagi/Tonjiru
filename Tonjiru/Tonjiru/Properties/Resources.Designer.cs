@@ -4,67 +4,167 @@
 //     ランタイム バージョン:4.0.30319.42000
 //
 //     このファイルへの変更は、以下の状況下で不正な動作の原因になったり、
-//     コードが再生成されるときに損失したりします
+//     コードが再生成されるときに損失したりします。
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Tonjiru.Properties
-{
-
-
+namespace Tonjiru.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   ローカライズされた文字列などを検索するための、厳密に型指定されたリソース クラスです。
     /// </summary>
-    // このクラスは StronglyTypedResourceBuilder クラスによって ResGen
+    // このクラスは StronglyTypedResourceBuilder クラスが ResGen
     // または Visual Studio のようなツールを使用して自動生成されました。
     // メンバーを追加または削除するには、.ResX ファイルを編集して、/str オプションと共に
-    // ResGen を実行し直すか、または VS プロジェクトをリビルドします。
+    // ResGen を実行し直すか、または VS プロジェクトをビルドし直します。
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources
-    {
-
+    public class Resources {
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources()
-        {
+        internal Resources() {
         }
-
+        
         /// <summary>
-        ///   このクラスで使用されるキャッシュされた ResourceManager インスタンスを返します。
+        ///   このクラスで使用されているキャッシュされた ResourceManager インスタンスを返します。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager
-        {
-            get
-            {
-                if ((resourceMan == null))
-                {
+        public static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Tonjiru.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   厳密に型指定されたこのリソース クラスを使用して、すべての検索リソースに対し、
         ///   現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture
-        {
-            get
-            {
+        public static global::System.Globalization.CultureInfo Culture {
+            get {
                 return resourceCulture;
             }
-            set
-            {
+            set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Close All Windows and Exit に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ButtonCloseAllWindowsAndExit {
+            get {
+                return ResourceManager.GetString("ButtonCloseAllWindowsAndExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Copy Windows&apos; Information to Clipboard に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ButtonCopyWindows {
+            get {
+                return ResourceManager.GetString("ButtonCopyWindows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Refresh Windows に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ButtonRefreshWindows {
+            get {
+                return ResourceManager.GetString("ButtonRefreshWindows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Save Windows&apos; Information as File に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ButtonSaveWindows {
+            get {
+                return ResourceManager.GetString("ButtonSaveWindows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Notify after sending &quot;close&quot; signals に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string CheckboxNotification {
+            get {
+                return ResourceManager.GetString("CheckboxNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Language に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string LabelLanguage {
+            get {
+                return ResourceManager.GetString("LabelLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Message Type に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string LabelMessageType {
+            get {
+                return ResourceManager.GetString("LabelMessageType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Notification に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string LabelNotification {
+            get {
+                return ResourceManager.GetString("LabelNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The window belonging to the above processes is not closed at UI-less mode に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string LabelProcessExclusionsCaution {
+            get {
+                return ResourceManager.GetString("LabelProcessExclusionsCaution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Process Exclusions に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TabProcessExclusions {
+            get {
+                return ResourceManager.GetString("TabProcessExclusions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Settings に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TabSettings {
+            get {
+                return ResourceManager.GetString("TabSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Windows に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TabWindows {
+            get {
+                return ResourceManager.GetString("TabWindows", resourceCulture);
             }
         }
     }
