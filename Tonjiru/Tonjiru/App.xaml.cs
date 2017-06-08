@@ -31,11 +31,23 @@ namespace Tonjiru
             }
         }
 
+        public static string GetPathOfProcessExclusions()
+        {
+            var path = System.Reflection.Assembly.GetEntryAssembly().Location;
+
+            path = System.IO.Path.GetDirectoryName(path);
+            path = System.IO.Path.Combine(path, "exclusions.txt");
+
+            if (System.IO.File.Exists(path)) return path;
+
+            throw new Exception("Not find exclusions.txt");
+        }
+
         private static void CloseAllWindowsAndExit()
         {
             try
             {
-                var exclusions = System.IO.File.ReadAllLines("exclusions.txt");
+                var exclusions = System.IO.File.ReadAllLines(App.GetPathOfProcessExclusions());
 
                 foreach (var window in DesktopHelper.GetVisibleWindows())
                 {
