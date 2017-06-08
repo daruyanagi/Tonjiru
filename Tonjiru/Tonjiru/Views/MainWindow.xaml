@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tonjiru.Views"
         xmlns:p="clr-namespace:Tonjiru.Properties"
+        xmlns:app="clr-namespace:Tonjiru"
         mc:Ignorable="d"
-        Title="{Binding AppNameAndVersion}" Height="300" Width="400">
+        Title="{Binding AppNameAndVersion}" Height="360" Width="480">
 
     <Window.Resources>
         <Style TargetType="TextBlock">
@@ -30,33 +31,37 @@
 
         <ToolBarTray Grid.Row="0">
             <ToolBar>
-                <Button ToolTip="Refresh Windows" Command="{Binding RefreshCommand}">
+                <Button ToolTip="{Binding Source={x:Static app:ResourceService.Current}, Path=Resources.ButtonRefreshWindows, Mode=OneWay}" 
+                        Command="{Binding RefreshCommand}">
                     <Image Width="16" Height="16" Margin="4" Source="/Images/refresh.png"
                             RenderOptions.BitmapScalingMode="Fant" />
                 </Button>
                 <Separator />
-                <Button ToolTip="Copy Windows' Information to Clipboard" Command="{Binding CopyCommand}">
+                <Button ToolTip="{Binding Source={x:Static app:ResourceService.Current}, Path=Resources.ButtonCopyWindows, Mode=OneWay}"
+                        Command="{Binding CopyCommand}">
                     <Image Width="16" Height="16" Margin="4" Source="/Images/copy.png"
                             RenderOptions.BitmapScalingMode="Fant" />
                 </Button>
-                <Button ToolTip="Save Windows' Information as File" Command="{Binding SaveCommand}">
+                <Button ToolTip="{Binding Source={x:Static app:ResourceService.Current}, Path=Resources.ButtonSaveWindows, Mode=OneWay}"
+                        Command="{Binding SaveCommand}">
                     <Image Width="16" Height="16" Margin="4" Source="/Images/save.png"
                             RenderOptions.BitmapScalingMode="Fant" />
                 </Button>
                 <Separator />
                 <Button  
-                    ToolTip="Close All Windows And Exit" Command="{Binding CloseAllWindowsAndExitCommand}">
+                    ToolTip="{Binding Source={x:Static app:ResourceService.Current}, Path=Resources.ButtonCloseAllWindowsAndExit, Mode=OneWay}" 
+                    Command="{Binding CloseAllWindowsAndExitCommand}">
                     <StackPanel Orientation="Horizontal">
                         <Image Width="16" Height="16" Margin="4" Source="/Images/close.png"
                                RenderOptions.BitmapScalingMode="Fant" />
-                        <TextBlock>Close All Windows And Exit</TextBlock>
+                        <TextBlock Text="{Binding Source={x:Static app:ResourceService.Current}, Path=Resources.ButtonCloseAllWindowsAndExit, Mode=OneWay}"/>
                     </StackPanel>
                 </Button>
             </ToolBar>
         </ToolBarTray>
 
         <TabControl Grid.Row="1">
-            <TabItem Header="Windows">
+            <TabItem Header="{Binding Source={x:Static app:ResourceService.Current}, Path=Resources.TabWindows, Mode=OneWay}">
                 <ListView ItemsSource="{Binding Windows}">
                     <ListView.ContextMenu>
                         <ContextMenu>
@@ -80,8 +85,8 @@
                     </ListView.View>
                 </ListView>
             </TabItem>
-            
-            <TabItem Header="Exclusions">
+
+            <TabItem Header="{Binding Source={x:Static app:ResourceService.Current}, Path=Resources.TabProcessExclusions, Mode=OneWay}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
@@ -97,22 +102,26 @@
                             </ContextMenu>
                         </ListBox.ContextMenu>
                     </ListBox>
-                    <TextBlock Grid.Row="1" Margin="6">* if process name matchs exclusions, window is not closed.</TextBlock>
+                    <TextBlock Grid.Row="1" Margin="6" 
+                               Text="{Binding Source={x:Static app:ResourceService.Current}, Path=Resources.LabelProcessExclusionsCaution, Mode=OneWay}" />
                 </Grid>
                 
             </TabItem>
 
-            <TabItem Header="Settings">
+            <TabItem Header="{Binding Source={x:Static app:ResourceService.Current}, Path=Resources.TabSettings, Mode=OneWay}">
                 <StackPanel>
-                    <TextBlock>MessageType</TextBlock>
+                    <TextBlock Text="{Binding Source={x:Static app:ResourceService.Current}, Path=Resources.LabelMessageType, Mode=OneWay}"/>
                     <ComboBox SelectedIndex="{Binding Source={x:Static p:Settings.Default}, Path=MessageType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <ComboBoxItem>SendMessage</ComboBoxItem>
                         <ComboBoxItem>PostMessage</ComboBoxItem>
                     </ComboBox>
-                    <TextBlock>Notification</TextBlock>
-                    <CheckBox IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=Notification, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                        Notify after sending "close" signals
-                    </CheckBox>
+                    <TextBlock Text="{Binding Source={x:Static app:ResourceService.Current}, Path=Resources.LabelNotification, Mode=OneWay}"/>
+                    <CheckBox Content="{Binding Source={x:Static app:ResourceService.Current}, Path=Resources.CheckboxNotification, Mode=OneWay}"
+                        IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=Notification, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock Text="{Binding Source={x:Static app:ResourceService.Current}, Path=Resources.LabelLanguage, Mode=OneWay}"/>
+                    <ComboBox ItemsSource="{Binding Source={x:Static app:ResourceService.Current}, Path=SupportedCultures}" 
+                              SelectedItem="{Binding Source={x:Static app:ResourceService.Current}, Path=Culture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              />
                 </StackPanel>
             </TabItem>
         </TabControl>
