@@ -40,6 +40,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -105,6 +106,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\save.png" />
+    <Resource Include="Images\copy.png" />
     <Resource Include="Images\refresh.png" />
     <Resource Include="Images\close.png" />
     <Resource Include="app.ico" />
