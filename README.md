@@ -14,6 +14,8 @@
 
 https://github.com/daruyanagi/Tonjiru/releases
 
+.NET Framework 4.7 が必要です（Windows 10 Creators Update を推奨）
+
 # 更新情報
 
 http://blog.daruyanagi.jp/archive/category/Tonjiru
@@ -32,4 +34,8 @@ exclusions.txt に書かれたプロセス（小文字）に属するウィン�
 
 ![](https://cdn-ak.f.st-hatena.com/images/fotolife/d/daruyanagi/20170606/20170606214302.png)
 
-exclusions.txt の編集も GUI で行えます（コンテキストメニューから追加・削除）。
+exclusions.txt の編集も GUI で行えます（コンテキストメニューから追加・削除）。UI-less モードのときに閉じたくないプロセスをここで指定しておけます。
+
+![](https://cdn-ak.f.st-hatena.com/images/fotolife/d/daruyanagi/20170608/20170608192727.png)
+
+v1.2.0 からはジャンプリストや /g スイッチでも GUI が利用できるようになりました
