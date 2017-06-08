@@ -10,12 +10,18 @@ namespace Tonjiru
     {
         public static void ShowBalloonTip(string message = "Shutdown signals are sent.")
         {
-            var notify_icon = new System.Windows.Forms.NotifyIcon();
-            notify_icon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Reflection.Assembly.GetEntryAssembly().Location);
-            notify_icon.BalloonTipTitle = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
-            notify_icon.BalloonTipText = message;
-            notify_icon.Visible = true;
-            notify_icon.ShowBalloonTip(3000);
+            if (Tonjiru.Properties.Settings.Default.Notification)
+            {
+                using (var notify_icon = new System.Windows.Forms.NotifyIcon())
+                {
+                    notify_icon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Reflection.Assembly.GetEntryAssembly().Location);
+                    notify_icon.Visible = true;
+
+                    notify_icon.BalloonTipTitle = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
+                    notify_icon.BalloonTipText = message;
+                    notify_icon.ShowBalloonTip(3000);
+                }
+            }
         }
     }
 }
