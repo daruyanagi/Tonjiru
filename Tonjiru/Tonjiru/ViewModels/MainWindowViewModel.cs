@@ -121,7 +121,7 @@ namespace Tonjiru.ViewModel
 
         ~MainWindowViewModel()
         {
-            System.IO.File.WriteAllLines("exclusions.txt", Exclusions);
+            System.IO.File.WriteAllLines(App.GetPathOfProcessExclusions(), Exclusions);
         }
 
         public RelayCommand RefreshCommand { get; private set; }
@@ -135,7 +135,7 @@ namespace Tonjiru.ViewModel
         {
             try
             {
-                var exclusions = System.IO.File.ReadAllLines("exclusions.txt");
+                var exclusions = System.IO.File.ReadAllLines(App.GetPathOfProcessExclusions());
 
                 Exclusions = new ObservableCollection<string>(exclusions);
             }

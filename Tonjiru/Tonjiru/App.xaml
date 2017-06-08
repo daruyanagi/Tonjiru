@@ -6,4 +6,12 @@
     <Application.Resources>
          
     </Application.Resources>
+
+    <JumpList.JumpList>
+        <JumpList>
+            <JumpTask Title="Launch with GUI"
+                Description="Launch with GUI" 
+                Arguments="/g" />
+        </JumpList>
+    </JumpList.JumpList>
 </Application>
