@@ -35,6 +35,15 @@
                             RenderOptions.BitmapScalingMode="Fant" />
                 </Button>
                 <Separator />
+                <Button ToolTip="Copy Windows' Information to Clipboard" Command="{Binding CopyCommand}">
+                    <Image Width="16" Height="16" Margin="4" Source="/Images/copy.png"
+                            RenderOptions.BitmapScalingMode="Fant" />
+                </Button>
+                <Button ToolTip="Save Windows' Information as File" Command="{Binding SaveCommand}">
+                    <Image Width="16" Height="16" Margin="4" Source="/Images/save.png"
+                            RenderOptions.BitmapScalingMode="Fant" />
+                </Button>
+                <Separator />
                 <Button  
                     ToolTip="Close All Windows And Exit" Command="{Binding CloseAllWindowsAndExitCommand}">
                     <StackPanel Orientation="Horizontal">

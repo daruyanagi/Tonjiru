@@ -8,12 +8,64 @@ namespace Tonjiru.ViewModel
 {
     using System.Collections.ObjectModel;
     using System.Diagnostics;
+    using System.Runtime.Serialization;
 
     public class MainWindowViewModel : BindableBase
     {
+        [DataContract]
+        public class Window
+        {
+            [DataMember(Name = "title")]
+            public string Title { get; set; }
+
+            [DataMember(Name = "processName")]
+            public string ProcessName { get; set; }
+
+            [DataMember(Name = "isTargeted")]
+            public bool IsTargeted { get; set; }
+        }
+
         public MainWindowViewModel()
         {
             RefreshCommand = new RelayCommand(() => { RefreshVisibleWindows(); });
+
+            string GetWindowsInfoByText()
+            {
+                var serializer = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(List<Window>));
+
+                using (var stream = new System.IO.MemoryStream())
+                using (var reader = new System.IO.StreamReader(stream))
+                {
+                    serializer.WriteObject(stream, Windows.Select(_ => new Window()
+                    {
+                        Title = _.Title,
+                        ProcessName = _.Parent.ProcessName.ToLower(),
+                        IsTargeted = _.IsTargeted
+                    }).ToList());
+                    stream.Position = 0;
+                    return reader.ReadToEnd();
+                }
+            };
+
+            CopyCommand = new RelayCommand(() =>
+            {
+                System.Windows.Clipboard.SetText(GetWindowsInfoByText());
+            });
+
+            SaveCommand = new RelayCommand(() =>
+            {
+                using (var dialog = new System.Windows.Forms.SaveFileDialog())
+                {
+                    dialog.Filter = "Plain Text|*.txt";
+
+                    switch (dialog.ShowDialog())
+                    {
+                        case System.Windows.Forms.DialogResult.OK:
+                            System.IO.File.WriteAllText(dialog.FileName, GetWindowsInfoByText());
+                            break;
+                    }
+                }
+            });
 
             CloseAllWindowsAndExitCommand = new RelayCommand(() => 
             {
@@ -73,6 +125,8 @@ namespace Tonjiru.ViewModel
         }
 
         public RelayCommand RefreshCommand { get; private set; }
+        public RelayCommand CopyCommand { get; private set; }
+        public RelayCommand SaveCommand { get; private set; }
         public RelayCommand CloseAllWindowsAndExitCommand { get; private set; }
         public RelayCommand<WindowInfo> AddExclusionsCommand { get; private set; }
         public RelayCommand<string> RemoveExclusionsCommand { get; private set; }
