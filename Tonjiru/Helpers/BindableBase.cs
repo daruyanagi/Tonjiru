@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 
+[DataContract]
 /// <summary>
 /// モデルを簡略化するための <see cref="INotifyPropertyChanged"/> の実装。
 /// </summary>

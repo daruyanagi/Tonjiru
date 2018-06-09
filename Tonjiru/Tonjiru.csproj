@@ -8,11 +8,12 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Tonjiru</RootNamespace>
     <AssemblyName>Tonjiru</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -64,10 +65,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BindableBase.cs" />
-    <Compile Include="DesktopHelper.cs" />
-    <Compile Include="NotificationHelper.cs" />
-    <Compile Include="RelayCommand.cs" />
+    <Compile Include="Helpers\BindableBase.cs" />
+    <Compile Include="Helpers\DesktopHelper.cs" />
+    <Compile Include="Models\WindowInfo.cs" />
+    <Compile Include="Helpers\NotificationHelper.cs" />
+    <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="ResourceService.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
@@ -108,6 +110,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\close_all.png" />
     <Resource Include="Images\save.png" />
     <Resource Include="Images\copy.png" />
     <Resource Include="Images\refresh.png" />
@@ -117,8 +120,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
