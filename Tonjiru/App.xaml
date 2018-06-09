@@ -9,9 +9,9 @@
 
     <JumpList.JumpList>
         <JumpList>
-            <JumpTask Title="Launch with GUI"
-                Description="Launch with GUI" 
-                Arguments="/g" />
+            <JumpTask Title="Launch with GUI-less Mode"
+                Description="Launch with GUI-less Mode" 
+                Arguments="/s" />
         </JumpList>
     </JumpList.JumpList>
 </Application>
