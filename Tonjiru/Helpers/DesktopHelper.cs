@@ -71,7 +71,7 @@ namespace Tonjiru
             return temp.ToList();
         }
 
-        public static List<TopLevelWindow> GetTopLevelWindows()
+		public static List<TopLevelWindow> GetTopLevelWindows()
         {
             windows.Clear();
 
@@ -99,11 +99,13 @@ namespace Tonjiru
             GetWindowText(handle, builder, builder.Capacity);
             window.Title = builder.ToString();
 
+			// もっといい Uwp 判定の方法はないものか
             if (window.Parent.ProcessName == "ApplicationFrameHost")
             {
                 process = null;
                 EnumChildWindows(handle, EnumChildWindowProc, IntPtr.Zero);
                 window.Parent = process;
+				window.IsUwp = true;
             }
 
             windows.Add(window);
@@ -123,11 +125,11 @@ namespace Tonjiru
             {
                 int processId;
                 GetWindowThreadProcessId(windowHandle, out processId);
-
+			
                 process = Process.GetProcessById(processId);
-
+			
                 if (process != null) return false;
-
+			
                 // Microsoft Edge は null だった。とりあえず飛ばしておくことにしておこう
             }
 
@@ -151,11 +153,13 @@ namespace Tonjiru
         public bool IsVisible { get; set; }
         public string Title { get; set; }
         public Process Parent { get; set; }
+		public bool IsUwp { get; set; } = false;
 
-        public void Close()
+		public void Close()
         {
-            // とりあえず WM_CLOSE と SC_CLOSE の両方送っておく
-            // ToDo：オプションで選べるようにしてもいいかも
+			// UI less モードでしか使わない
+			// とりあえず WM_CLOSE と SC_CLOSE の両方送っておく
+			// ToDo：オプションで選べるようにしてもいいかも
 
             switch (Properties.Settings.Default.MessageType)
             {

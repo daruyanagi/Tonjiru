@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace Tonjiru
 {
-    using System.Runtime.InteropServices;
+	using System.IO;
+	using System.Runtime.InteropServices;
     using System.Windows.Forms; // 初期設定では参照されていないので追加しておく
 
     // 修飾しないと System.Windows.Forms.Application に解釈されてコンパイルできない
@@ -19,16 +15,16 @@ namespace Tonjiru
         {
             var args = Environment.GetCommandLineArgs();
 
-            if (args.Contains("/g") || (Control.ModifierKeys & Keys.Shift) == Keys.Shift)
-            {
-                var app = new Tonjiru.App();
-                app.InitializeComponent();
-                app.Run();
+			// S スイッチ実行または［Shift］キー押し下げ実行で UI less mode
+			// そうでなければ UI mode
+			if (args.Contains("/s") || (Control.ModifierKeys & Keys.Shift) == Keys.Shift)
+			{
+				StartUIlessMode();
             }
-            else // UI less mode
+            else
             {
-                CloseAllWindowsAndExit();
-            }
+				StartUIMode();
+			}
         }
 
         public static string GetPathOfProcessExclusions()
@@ -43,35 +39,49 @@ namespace Tonjiru
             throw new Exception("Not find exclusions.txt");
         }
 
-        private static void CloseAllWindowsAndExit()
-        {
-            try
-            {
-                var exclusions = System.IO.File.ReadAllLines(App.GetPathOfProcessExclusions());
+		private static void StartUIMode()
+		{
+			var app = new Tonjiru.App();
+			app.InitializeComponent();
+			app.Run();
+		}
 
-                foreach (var window in DesktopHelper.GetVisibleWindows())
-                {
-                    if (exclusions.Any(_ => _ == window.Parent.ProcessName.ToLower()))
-                    {
-                        continue;
-                    }
+		private static void StartUIlessMode()
+		{
+			try
+			{
+				var exclusions = File.ReadAllLines(App.GetPathOfProcessExclusions());
 
-                    window.Close();
-                }
+				foreach (var window in DesktopHelper.GetVisibleWindows())
+				{
+					var proc_name = window.Parent.ProcessName.ToLower();
 
-                if (Tonjiru.Properties.Settings.Default.Notification)
-                {
-                    NotificationHelper.ShowBalloonTip();
-                }
-            }
-            catch (Exception exception)
-            {
-                if (Tonjiru.Properties.Settings.Default.Notification)
-                {
-                    NotificationHelper.ShowBalloonTip(exception.Message);
-                }
-            }
-        }
+					try
+					{
+						if (exclusions.Contains(proc_name))
+						{
+							Console.WriteLine($"Skipped: {proc_name}");
+							continue;
+						}
+						else
+						{
+							Console.WriteLine($"Requested: {proc_name}");
+							window.Close();
+						}
+					}
+					catch
+					{
+						Console.WriteLine($"Failed: {proc_name}");
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine($"Error: {e} \n App;ication exited.");
+			}
+			
+			Console.WriteLine($"Done.");
+		}
 
         public App() : base()
         {
