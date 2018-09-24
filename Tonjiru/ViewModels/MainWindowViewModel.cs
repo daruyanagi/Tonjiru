@@ -166,10 +166,15 @@ namespace Tonjiru.ViewModel
 		{
 			try
 			{
-				var exclusions = System.IO.File.ReadAllLines(App.GetPathOfProcessExclusions());
+                // var exclusions = System.IO.File.ReadAllLines(App.GetPathOfProcessExclusions());
 
-				Exclusions = new ObservableCollection<string>(exclusions);
-			}
+                // Exclusions = new ObservableCollection<string>(exclusions);
+
+                var exclusions = Properties.Settings.Default.Exclusions.Split(';');
+
+                Exclusions = new ObservableCollection<string>(exclusions);
+
+            }
 			catch (Exception exception)
 			{
 				if (Tonjiru.Properties.Settings.Default.Notification)
@@ -183,8 +188,11 @@ namespace Tonjiru.ViewModel
 
 		public void SaveExclusions()
 		{
-			System.IO.File.WriteAllLines(App.GetPathOfProcessExclusions(), Exclusions);
-		}
+            // System.IO.File.WriteAllLines(App.GetPathOfProcessExclusions(), Exclusions);
+
+            Properties.Settings.Default.Exclusions = string.Join(";", Exclusions);
+            Properties.Settings.Default.Save();
+        }
 
 		public async Task RefreshVisibleWindowsAsync()
 		{
