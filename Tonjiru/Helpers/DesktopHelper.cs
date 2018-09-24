@@ -54,19 +54,20 @@ namespace Tonjiru
             // 処理の簡便のため Linq で済ます
 
             // 表示されて（いて、タイトルをもって）いるウインドウのみを列挙
-            var temp = GetTopLevelWindows().Where(_ => _.IsVisible && !string.IsNullOrEmpty(_.Title));
+            //var temp = GetTopLevelWindows().Where(_ => _.IsVisible && !string.IsNullOrEmpty(_.Title));
+            // v1.5.0.0 でやった
+            var temp = GetTopLevelWindows()
 
-            // Parent == null は除外しておく
-            temp = temp.Where(_ => _.Parent != null);
+                // Parent == null は除外しておく
+                .Where(_ => _.Parent != null)
+                // 自分は除外しておく
+                .Where(_ => _.Parent.ProcessName.ToLower() != "tonjiru")
 
-            // 自分は除外しておく
-            temp = temp.Where(_ => _.Parent.ProcessName.ToLower() != "tonjiru");
+                // Microsoft Edge の CP（コンテンツプロセス）は除外しておく
+                .Where(_ => _.Parent.ProcessName != "MicrosoftEdgeCP")
 
-            // Microsoft Edge の CP（コンテンツプロセス）は除外しておく
-            temp = temp.Where(_ => _.Parent.ProcessName != "MicrosoftEdgeCP");
-
-            // Program Manager (explorer) は除外しておく
-            temp = temp.Where(_ => _.Title != "Program Manager" || _.Parent.ProcessName.ToLower() != "explorer");
+                // Program Manager (explorer) は除外しておく
+                .Where(_ => _.Title != "Program Manager" || _.Parent.ProcessName.ToLower() != "explorer");
                 
             return temp.ToList();
         }
@@ -90,6 +91,9 @@ namespace Tonjiru
 
             window.IsVisible = IsWindowVisible(handle);
 
+            // とりあえず
+            if (!window.IsVisible) return true;
+
             int id = default(int);
             GetWindowThreadProcessId(handle, out id);
             window.Parent = Process.GetProcessById(id);
@@ -99,7 +103,10 @@ namespace Tonjiru
             GetWindowText(handle, builder, builder.Capacity);
             window.Title = builder.ToString();
 
-			// もっといい Uwp 判定の方法はないものか
+            // とりあえず
+            if (string.IsNullOrEmpty(window.Title)) return true;
+
+            // もっといい Uwp 判定の方法はないものか
             if (window.Parent.ProcessName == "ApplicationFrameHost")
             {
                 process = null;
