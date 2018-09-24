@@ -30,8 +30,9 @@
         </Grid.RowDefinitions>
 
         <ToolBarTray Grid.Row="0">
-            <ToolBar>
-                <Button ToolTip="{Binding Source={x:Static app:ResourceService.Current}, Path=Resources.ButtonRefreshWindows, Mode=OneWay}" 
+            <ToolBar IsEnabled="{Binding RefreshCommandCanExecute}">
+                <Button ToolTip="{Binding Source={x:Static app:ResourceService.Current}, 
+                        Path=Resources.ButtonRefreshWindows, Mode=OneWay}" 
                         Command="{Binding RefreshCommand}">
                     <Image Width="16" Height="16" Margin="4" Source="/Images/refresh.png"
                             RenderOptions.BitmapScalingMode="Fant" />
@@ -114,7 +115,7 @@
                     <TextBlock Grid.Row="1" Margin="6" 
                                Text="{Binding Source={x:Static app:ResourceService.Current}, Path=Resources.LabelProcessExclusionsCaution, Mode=OneWay}" />
                 </Grid>
-                
+
             </TabItem>
 
             <TabItem Header="{Binding Source={x:Static app:ResourceService.Current}, Path=Resources.TabSettings, Mode=OneWay}">
@@ -134,5 +135,15 @@
                 </StackPanel>
             </TabItem>
         </TabControl>
+
+        <!-- ローディング画面 -->
+        <Border x:Name="Loading" Grid.Row="1" 
+                Visibility="{Binding LoadingPanelVisibiliry}"
+                Background="LightGray">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Foreground="Black">Loading...</TextBlock>
+        </Border>
     </Grid>
 </Window>

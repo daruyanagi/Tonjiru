@@ -31,6 +31,8 @@ namespace Tonjiru.ViewModel
 		{
 			string GetWindowsInfoByText()
 			{
+                if (WindowsInfoList == null) return string.Empty;
+
 				var serializer = new DataContractJsonSerializer(typeof(List<WindowInfo>));
 
 				using (var stream = new System.IO.MemoryStream())
@@ -42,10 +44,14 @@ namespace Tonjiru.ViewModel
 				}
 			};
 
-			RefreshCommand = new RelayCommand(async () =>
-			{
-				await RefreshVisibleWindowsAsync();
-			});
+            RefreshCommand = new RelayCommand(async () =>
+            {
+                RefreshCommandCanExecute = false;
+
+                await RefreshVisibleWindowsAsync();
+
+                RefreshCommandCanExecute = true;
+            });
 
 			CopyCommand = new RelayCommand(() =>
 			{
@@ -122,7 +128,9 @@ namespace Tonjiru.ViewModel
 
 		public void CloseAllWindows()
 		{
-			foreach (var window in WindowsInfoList)
+            if (WindowsInfoList == null) return;
+
+            foreach (var window in WindowsInfoList)
 			{
 				var proc_name = window.Parent.ProcessName.ToLower();
 
@@ -185,6 +193,8 @@ namespace Tonjiru.ViewModel
 
 		public void RefreshVisibleWindows()
         {
+            LoadingPanelVisibiliry = System.Windows.Visibility.Visible;
+
             var temp = DesktopHelper
                 .GetVisibleWindows()
                 .Select(_ => new WindowInfo()
@@ -196,11 +206,27 @@ namespace Tonjiru.ViewModel
             WindowsInfoList = new ObservableCollection<WindowInfo>(temp);
 			
             OnPropertyChanged(nameof(WindowsInfoList));
+
+            LoadingPanelVisibiliry = System.Windows.Visibility.Collapsed;
         }
 
         public ObservableCollection<WindowInfo> WindowsInfoList { get; set; }
 
         public ObservableCollection<string> Exclusions { get; set; }
+
+        public System.Windows.Visibility LoadingPanelVisibiliry
+        {
+            get => loadingPanelVisibiliry;
+            set => SetProperty(ref loadingPanelVisibiliry, value);
+        }
+        private System.Windows.Visibility loadingPanelVisibiliry = System.Windows.Visibility.Collapsed;
+
+        public bool RefreshCommandCanExecute
+        {
+            get => refreshCommandCanExecute;
+            set => SetProperty(ref refreshCommandCanExecute, value);
+        }
+        private bool refreshCommandCanExecute = true;
 
         public string AppNameAndVersion
         {
