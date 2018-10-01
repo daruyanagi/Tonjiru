@@ -166,10 +166,6 @@ namespace Tonjiru.ViewModel
 		{
 			try
 			{
-                // var exclusions = System.IO.File.ReadAllLines(App.GetPathOfProcessExclusions());
-
-                // Exclusions = new ObservableCollection<string>(exclusions);
-
                 var exclusions = Properties.Settings.Default.Exclusions.Split(';');
 
                 Exclusions = new ObservableCollection<string>(exclusions);
@@ -188,8 +184,6 @@ namespace Tonjiru.ViewModel
 
 		public void SaveExclusions()
 		{
-            // System.IO.File.WriteAllLines(App.GetPathOfProcessExclusions(), Exclusions);
-
             Properties.Settings.Default.Exclusions = string.Join(";", Exclusions);
             Properties.Settings.Default.Save();
         }

@@ -27,19 +27,27 @@ namespace Tonjiru
 			}
         }
 
-        public static string GetPathOfProcessExclusions()
+        public static System.Collections.ObjectModel.ObservableCollection<string> LoadExclusions()
         {
-            var path = System.Reflection.Assembly.GetEntryAssembly().Location;
+            try
+            {
+                var exclusions = Tonjiru.Properties.Settings.Default.Exclusions.Split(';');
 
-            path = System.IO.Path.GetDirectoryName(path);
-            path = System.IO.Path.Combine(path, "exclusions.txt");
+                return new System.Collections.ObjectModel.ObservableCollection<string>(exclusions);
 
-            if (System.IO.File.Exists(path)) return path;
+            }
+            catch (Exception exception)
+            {
+                if (Tonjiru.Properties.Settings.Default.Notification)
+                {
+                    NotificationHelper.ShowBalloonTip(exception.Message);
+                }
 
-            throw new Exception("Not find exclusions.txt");
+                return null;
+            }
         }
 
-		private static void StartUIMode()
+        private static void StartUIMode()
 		{
 			var app = new Tonjiru.App();
 			app.InitializeComponent();
@@ -50,9 +58,13 @@ namespace Tonjiru
 		{
 			try
 			{
-				var exclusions = File.ReadAllLines(App.GetPathOfProcessExclusions());
+                var exclusions = LoadExclusions();
 
-				foreach (var window in DesktopHelper.GetVisibleWindows())
+                // ホストまで死んじゃうので
+                if (!exclusions.Contains("powershell")) exclusions.Add("powershell");
+                if (!exclusions.Contains("cmd")) exclusions.Add("cmd");
+
+                foreach (var window in DesktopHelper.GetVisibleWindows())
 				{
 					var proc_name = window.Parent.ProcessName.ToLower();
 
